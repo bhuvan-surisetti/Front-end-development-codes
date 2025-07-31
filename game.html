@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Game Zone</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables for Theming */
+        :root {
+            /* Light Theme Defaults */
+            --body-bg: #f0f2f5;
+            --container-bg: #ffffff;
+            --section-bg: #f9fafb;
+            --text-primary: #374151;
+            --text-secondary: #6b7280;
+            --header-text: #1f2937;
+            --border-color: #e5e7eb;
+            --button-bg-primary: #4f46e5;
+            --button-text-primary: #ffffff;
+            --button-hover-primary: #4338ca;
+            --button-bg-secondary: #e5e7eb;
+            --button-text-secondary: #374151;
+            --button-hover-secondary: #d1d5db;
+
+            /* Tic Tac Toe */
+            --tictactoe-board-bg: #374151;
+            --tictactoe-cell-bg: #f9fafb;
+            --tictactoe-cell-hover: #e5e7eb;
+            --tictactoe-x-color: #ef4444;
+            --tictactoe-o-color: #3b82f6;
+            --tictactoe-draw-color: #6b7280;
+
+            /* Bubble Popping */
+            --bubble-game-area-bg: #e0f2f7;
+            --bubble-game-area-border: #a7d9ed;
+            --bubble-color: #60a5fa;
+            --bubble-popped-color: #ef4444;
+
+            /* Flash Cards */
+            --flashcard-front-bg: #d1fae5;
+            --flashcard-back-bg: #bfdbfe;
+
+            /* Memory Match */
+            --memory-card-bg: #a78bfa; /* Purple */
+            --memory-card-back-bg: #e0e7ff; /* Light blue-purple */
+            --memory-card-matched-bg: #10b981; /* Green */
+            --memory-card-text-color: #ffffff;
+            --memory-card-back-text-color: #374151;
+        }
+
+        /* Dark Theme Overrides */
+        body.dark-theme {
+            --body-bg: #1a202c;
+            --container-bg: #2d3748;
+            --section-bg: #4a5568;
+            --text-primary: #e2e8f0;
+            --text-secondary: #cbd5e0;
+            --header-text: #f7fafc;
+            --border-color: #4a5568;
+            --button-bg-primary: #6366f1;
+            --button-text-primary: #ffffff;
+            --button-hover-primary: #4f46e5;
+            --button-bg-secondary: #6b7280;
+            --button-text-secondary: #e2e8f0;
+            --button-hover-secondary: #525c6b;
+
+            /* Tic Tac Toe */
+            --tictactoe-board-bg: #1f2937;
+            --tictactoe-cell-bg: #4a5568;
+            --tictactoe-cell-hover: #525c6b;
+            --tictactoe-x-color: #fca5a5; /* Lighter red */
+            --tictactoe-o-color: #93c5fd; /* Lighter blue */
+            --tictactoe-draw-color: #cbd5e0;
+
+            /* Bubble Popping */
+            --bubble-game-area-bg: #2c5282;
+            --bubble-game-area-border: #4299e1;
+            --bubble-color: #90cdf4; /* Lighter blue bubble */
+            --bubble-popped-color: #f87171; /* Lighter red when popped */
+
+            /* Flash Cards */
+            --flashcard-front-bg: #48bb78; /* Medium green */
+            --flashcard-back-bg: #63b3ed; /* Medium blue */
+
+            /* Memory Match */
+            --memory-card-bg: #7c3aed; /* Darker purple */
+            --memory-card-back-bg: #4a5568; /* Dark grey */
+            --memory-card-matched-bg: #065f46; /* Darker green */
+            --memory-card-text-color: #ffffff;
+            --memory-card-back-text-color: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--body-bg);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 1.5rem;
+            transition: background-color 0.3s ease; /* Smooth transition for theme change */
+        }
+        .game-container {
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            background-color: var(--container-bg);
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            transition: background-color 0.3s ease;
+        }
+        .tab-button {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+            background-color: var(--button-bg-secondary);
+            color: var(--button-text-secondary);
+        }
+        .tab-button.active {
+            background-color: var(--button-bg-primary);
+            color: var(--button-text-primary);
+        }
+        .tab-button:not(.active):hover {
+            background-color: var(--button-hover-secondary);
+        }
+        .game-section {
+            display: none; /* Hidden by default */
+            padding-top: 2rem;
+        }
+        .game-section.active {
+            display: block; /* Show active section */
+        }
+        .btn-primary {
+            background-color: var(--button-bg-primary);
+            color: var(--button-text-primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .btn-primary:hover {
+            background-color: var(--button-hover-primary);
+        }
+
+        /* General Text Colors */
+        h1, h2 {
+            color: var(--header-text);
+        }
+        span, p, div {
+            color: var(--text-primary);
+        }
+
+        /* Tic Tac Toe Specific Styles */
+        #tic-tac-toe-board {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-template-rows: repeat(3, 100px);
+            gap: 8px;
+            width: 316px; /* 3*100 + 2*8 */
+            height: 316px;
+            margin: 2rem auto;
+            background-color: var(--tictactoe-board-bg);
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+        .tic-tac-toe-cell {
+            width: 100px;
+            height: 100px;
+            background-color: var(--tictactoe-cell-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            border-radius: 0.25rem;
+        }
+        .tic-tac-toe-cell:hover {
+            background-color: var(--tictactoe-cell-hover);
+        }
+        .tic-tac-toe-cell.x {
+            color: var(--tictactoe-x-color); /* Red for X */
+        }
+        .tic-tac-toe-cell.o {
+            color: var(--tictactoe-o-color); /* Blue for O */
+        }
+        #tic-tac-toe-status {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            color: var(--text-primary);
+        }
+        .tic-tac-toe-score {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+        .tic-tac-toe-score span {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            background-color: var(--section-bg);
+            color: var(--text-primary);
+        }
+        .tic-tac-toe-score .x-score { color: var(--tictactoe-x-color); }
+        .tic-tac-toe-score .o-score { color: var(--tictactoe-o-color); }
+        .tic-tac-toe-score .draw-score { color: var(--tictactoe-draw-color); }
+
+
+        /* Bubble Popping Specific Styles */
+        #bubble-game-area {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background-color: var(--bubble-game-area-bg);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            margin-top: 1.5rem;
+            border: 2px solid var(--bubble-game-area-border);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        .bubble {
+            position: absolute;
+            background-color: var(--bubble-color); /* Blue bubble */
+            border-radius: 50%;
+            cursor: pointer;
+            animation: floatUp 5s linear forwards;
+            opacity: 0.8;
+            transition: transform 0.1s ease-out, opacity 0.3s ease-out, background-color 0.3s ease;
+        }
+        .bubble:hover {
+            transform: scale(1.1);
+        }
+        .bubble.popped {
+            background-color: var(--bubble-popped-color); /* Red when popped */
+            opacity: 0;
+            transform: scale(0);
+        }
+        @keyframes floatUp {
+            from { bottom: -50px; }
+            to { bottom: 100%; }
+        }
+        #bubble-message {
+            color: var(--tictactoe-x-color); /* Use a consistent error color */
+        }
+
+        /* Flash Cards Specific Styles */
+        .flashcard-container {
+            perspective: 1000px;
+            width: 300px;
+            height: 200px;
+            margin: 2rem auto;
+        }
+        .flashcard {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .flashcard.flipped {
+            transform: rotateY(180deg);
+        }
+        .flashcard-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            border-radius: 0.75rem;
+            text-align: center;
+            padding: 1rem;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .flashcard-front {
+            background-color: var(--flashcard-front-bg); /* Light green */
+        }
+        .flashcard-back {
+            background-color: var(--flashcard-back-bg); /* Light blue */
+            transform: rotateY(180deg);
+        }
+        .flashcard-navigation {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        /* Memory Match Specific Styles */
+        #memory-game-board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* Default 4 columns */
+            gap: 1rem;
+            max-width: 500px; /* Adjust based on card size */
+            margin: 2rem auto;
+            padding: 1rem;
+            background-color: var(--section-bg);
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .memory-card {
+            width: 100%;
+            padding-bottom: 100%; /* Makes cards square */
+            position: relative;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .memory-card.flipped {
+            transform: rotateY(180deg);
+        }
+        .memory-card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.5rem; /* Icon size */
+            border-radius: 0.5rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .memory-card-front-face {
+            background-color: var(--memory-card-back-bg); /* Card back color */
+            color: var(--memory-card-back-text-color);
+        }
+        .memory-card-back-face {
+            background-color: var(--memory-card-bg); /* Card front color */
+            color: var(--memory-card-text-color);
+            transform: rotateY(180deg);
+        }
+        .memory-card.matched .memory-card-back-face {
+            background-color: var(--memory-card-matched-bg); /* Matched card color */
+        }
+        .memory-card.matched {
+            cursor: default;
+        }
+        #memory-game-timer {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-left: 1.5rem;
+        }
+        .difficulty-select {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            background-color: var(--section-bg);
+            color: var(--text-primary);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .difficulty-select:hover {
+            background-color: var(--button-hover-secondary);
+        }
+
+
+        @media (max-width: 767px) {
+            .game-container {
+                padding: 1rem;
+            }
+            #tic-tac-toe-board {
+                grid-template-columns: repeat(3, 80px);
+                grid-template-rows: repeat(3, 80px);
+                width: 264px; /* 3*80 + 2*8 */
+                height: 264px;
+            }
+            .tic-tac-toe-cell {
+                width: 80px;
+                height: 80px;
+                font-size: 2.5rem;
+            }
+            .flashcard-container {
+                width: 280px;
+                height: 180px;
+            }
+            .flashcard-face {
+                font-size: 1.3rem;
+            }
+            #memory-game-board {
+                grid-template-columns: repeat(4, 1fr); /* Still 4 columns, smaller cards */
+                gap: 0.75rem;
+                max-width: 320px; /* Adjust for smaller screens */
+            }
+            .memory-card-face {
+                font-size: 1.8rem; /* Smaller icons for smaller cards */
+            }
+            .tab-button {
+                flex-grow: 1; /* Allow buttons to grow and fill space */
+                margin: 0.25rem; /* Add a small margin between buttons */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1 class="text-3xl font-bold text-center mb-6">Mini Game Zone</h1>
+
+        <!-- Theme Toggle -->
+        <div class="flex justify-center space-x-4 mb-6">
+            <button id="themeLightBtn" class="tab-button" data-theme="light">Light Theme</button>
+            <button id="themeDarkBtn" class="tab-button" data-theme="dark">Dark Theme</button>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="flex justify-center flex-wrap gap-4 mb-8">
+            <button id="tabTicTacToe" class="tab-button active" data-game="tic-tac-toe">Tic Tac Toe</button>
+            <button id="tabMemoryMatch" class="tab-button" data-game="memory-match">Memory Match</button>
+            <button id="tabBubblePopping" class="tab-button" data-game="bubble-popping">Bubble Popping</button>
+            <button id="tabFlashCards" class="tab-button" data-game="flash-cards">Flash Cards</button>
+        </div>
+
+        <!-- Tic Tac Toe Section -->
+        <section id="tic-tac-toe" class="game-section active">
+            <h2 class="text-2xl font-semibold text-center mb-4">Tic Tac Toe</h2>
+            <div class="tic-tac-toe-score mb-4">
+                <span class="x-score">X Wins: <span id="tic-tac-toe-x-wins">0</span></span>
+                <span class="o-score">O Wins: <span id="tic-tac-toe-o-wins">0</span></span>
+                <span class="draw-score">Draws: <span id="tic-tac-toe-draws">0</span></span>
+            </div>
+            <div id="tic-tac-toe-board">
+                <div class="tic-tac-toe-cell" data-cell-index="0"></div>
+                <div class="tic-tac-toe-cell" data-cell-index="1"></div>
+                <div class="tic-tac-toe-cell" data-cell-index="2"></div>
+                <div class="tic-tac-toe-cell" data-cell-index="3"></div>
+                <div class="tic-tac-toe-cell" data-cell-index="4"></div>
+                <div class="tic-tac-toe-cell" data-cell-index="5"></div>
+                <div class="tic-tac-toe-cell" data-cell-index="6"></div>
+                <div class="tic-tac-toe-cell" data-cell-index="7"></div>
+                <div class="tic-tac-toe-cell" data-cell-index="8"></div>
+            </div>
+            <div id="tic-tac-toe-status">Click "Start New Game"</div>
+            <div class="text-center mt-4">
+                <button id="tic-tac-toe-start-new" class="btn-primary">Start New Game</button>
+                <button id="tic-tac-toe-reset-score" class="btn-primary ml-4">Reset Score</button>
+            </div>
+        </section>
+
+        <!-- Memory Match Section -->
+        <section id="memory-match" class="game-section">
+            <h2 class="text-2xl font-semibold text-center mb-4">Memory Match</h2>
+            <div class="flex justify-center items-center mb-4">
+                <span class="text-xl font-medium">Moves: <span id="memory-moves">0</span></span>
+                <span class="ml-4 text-xl font-medium">Matches: <span id="memory-matches">0</span> / <span id="memory-total-pairs">8</span></span>
+                <span id="memory-game-timer" class="ml-4 text-xl font-medium">Time: 0s</span>
+            </div>
+            <div class="text-center mb-4">
+                <label for="memoryDifficulty" class="block text-sm font-medium text-gray-700 mb-1">Difficulty:</label>
+                <select id="memoryDifficulty" class="difficulty-select">
+                    <option value="easy">Easy (4x4)</option>
+                    <option value="medium">Medium (5x4)</option>
+                    <option value="hard">Hard (6x4)</option>
+                </select>
+            </div>
+            <div id="memory-game-board">
+                <!-- Memory cards will be generated here -->
+            </div>
+            <div id="memory-status" class="text-center text-lg font-semibold mt-4"></div>
+            <div class="text-center mt-4">
+                <button id="memory-start-btn" class="btn-primary">Start Game</button>
+                <button id="memory-reset-btn" class="btn-primary ml-4 hidden">Reset Game</button>
+            </div>
+        </section>
+
+        <!-- Bubble Popping Section -->
+        <section id="bubble-popping" class="game-section">
+            <h2 class="text-2xl font-semibold text-center mb-4">Bubble Popping</h2>
+            <div class="text-center mb-4">
+                <span class="text-xl font-medium">Score: <span id="bubble-score">0</span></span>
+                <span class="ml-4 text-xl font-medium">Time: <span id="bubble-timer">60</span>s</span>
+            </div>
+            <div id="bubble-game-area">
+                <!-- Bubbles will be injected here by JavaScript -->
+            </div>
+            <div class="text-center mt-4">
+                <button id="bubble-start-btn" class="btn-primary">Start Game</button>
+                <button id="bubble-reset-btn" class="btn-primary ml-4 hidden">Reset Game</button>
+            </div>
+            <div id="bubble-message" class="text-center font-semibold mt-2"></div>
+        </section>
+
+        <!-- Flash Cards Section -->
+        <section id="flash-cards" class="game-section">
+            <h2 class="text-2xl font-semibold text-center mb-4">Flash Cards</h2>
+            <div class="flashcard-container">
+                <div id="flashcard" class="flashcard">
+                    <div id="flashcard-front" class="flashcard-face flashcard-front">Click "Next" to start!</div>
+                    <div id="flashcard-back" class="flashcard-face flashcard-back"></div>
+                </div>
+            </div>
+            <div class="flashcard-navigation">
+                <button id="flashcard-prev" class="btn-primary">&larr; Previous</button>
+                <button id="flashcard-flip" class="btn-primary">Flip Card</button>
+                <button id="flashcard-next" class="btn-primary">Next &rarr;</button>
+            </div>
+            <div class="text-center mt-4">Card <span id="flashcard-current-index">0</span> of <span id="flashcard-total-cards">0</span></div>
+        </section>
+    </div>
+
+    <script>
+        // --- Theme Switching Logic ---
+        const themeLightBtn = document.getElementById('themeLightBtn');
+        const themeDarkBtn = document.getElementById('themeDarkBtn');
+        const body = document.body;
+
+        /**
+         * Sets the active theme and saves it to localStorage.
+         * @param {string} theme - 'light' or 'dark'.
+         */
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                body.classList.add('dark-theme');
+                themeDarkBtn.classList.add('active');
+                themeLightBtn.classList.remove('active');
+            } else {
+                body.classList.remove('dark-theme');
+                themeLightBtn.classList.add('active');
+                themeDarkBtn.classList.remove('active');
+            }
+            localStorage.setItem('gameZoneTheme', theme);
+        }
+
+        // Event listeners for theme buttons
+        themeLightBtn.addEventListener('click', () => setTheme('light'));
+        themeDarkBtn.addEventListener('click', () => setTheme('dark'));
+
+        // Load theme from localStorage on page load
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('gameZoneTheme');
+            if (savedTheme) {
+                setTheme(savedTheme);
+            } else {
+                // Default to light theme if no preference is saved
+                setTheme('light');
+            }
+        }
+
+        // --- Tab Navigation Logic ---
+        const tabButtons = document.querySelectorAll('.tab-button[data-game]');
+        const gameSections = document.querySelectorAll('.game-section');
+
+        function showGameSection(gameId) {
+            gameSections.forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(gameId).classList.add('active');
+
+            tabButtons.forEach(button => {
+                button.classList.remove('active');
+                if (button.dataset.game === gameId) {
+                    button.classList.add('active');
+                }
+            });
+
+            // Reset games when switching tabs (optional, but good for clean state)
+            // Only reset if the game is not the one being activated
+            if (gameId !== 'bubble-popping') {
+                resetBubbleGame();
+            }
+            if (gameId !== 'tic-tac-toe') {
+                resetTicTacToe(); // This will just reset the current round, not scores
+            }
+            if (gameId !== 'flash-cards') {
+                resetFlashCards();
+            }
+            if (gameId !== 'memory-match') {
+                resetMemoryMatch();
+            }
+        }
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                showGameSection(button.dataset.game);
+            });
+        });
+
+        // --- Tic Tac Toe Logic ---
+        const ticTacToeBoard = document.getElementById('tic-tac-toe-board');
+        const ticTacToeCells = document.querySelectorAll('.tic-tac-toe-cell');
+        const ticTacToeStatus = document.getElementById('tic-tac-toe-status');
+        const ticTacToeStartNewBtn = document.getElementById('tic-tac-toe-start-new');
+        const ticTacToeResetScoreBtn = document.getElementById('tic-tac-toe-reset-score');
+        const ticTacToeXWinsSpan = document.getElementById('tic-tac-toe-x-wins');
+        const ticTacToeOWinsSpan = document.getElementById('tic-tac-toe-o-wins');
+        const ticTacToeDrawsSpan = document.getElementById('tic-tac-toe-draws');
+
+
+        let ticTacToeGameActive = false; // Game starts inactive, needs "Start New Game"
+        let ticTacToeCurrentPlayer = 'X';
+        let ticTacToeGameState = ['', '', '', '', '', '', '', '', '']; // Represents the board state
+
+        let ticTacToeScores = {
+            X: 0,
+            O: 0,
+            Draw: 0
+        };
+
+        const ticTacToeWinningConditions = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+            [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+            [0, 4, 8], [2, 4, 6]             // Diagonals
+        ];
+
+        /**
+         * Updates the score display in the UI.
+         */
+        function updateTicTacToeScoreDisplay() {
+            ticTacToeXWinsSpan.textContent = ticTacToeScores.X;
+            ticTacToeOWinsSpan.textContent = ticTacToeScores.O;
+            ticTacToeDrawsSpan.textContent = ticTacToeScores.Draw;
+        }
+
+        /**
+         * Handles a cell click in Tic Tac Toe.
+         * @param {Event} clickedCellEvent - The click event object.
+         */
+        function handleTicTacToeCellClick(clickedCellEvent) {
+            const clickedCell = clickedCellEvent.target;
+            const clickedCellIndex = parseInt(clickedCell.dataset.cellIndex);
+
+            if (ticTacToeGameState[clickedCellIndex] !== '' || !ticTacToeGameActive) {
+                return; // Cell already taken or game is inactive
+            }
+
+            ticTacToeGameState[clickedCellIndex] = ticTacToeCurrentPlayer;
+            clickedCell.textContent = ticTacToeCurrentPlayer;
+            clickedCell.classList.add(ticTacToeCurrentPlayer.toLowerCase()); // Add class for styling
+
+            handleTicTacToeResultValidation();
+        }
+
+        /**
+         * Checks if the current game state results in a win or draw.
+         */
+        function handleTicTacToeResultValidation() {
+            let roundWon = false;
+            for (let i = 0; i < ticTacToeWinningConditions.length; i++) {
+                const winCondition = ticTacToeWinningConditions[i];
+                let a = ticTacToeGameState[winCondition[0]];
+                let b = ticTacToeGameState[winCondition[1]];
+                let c = ticTacToeGameState[winCondition[2]];
+
+                if (a === '' || b === '' || c === '') {
+                    continue; // Skip if any cell in condition is empty
+                }
+                if (a === b && b === c) {
+                    roundWon = true;
+                    break;
+                }
+            }
+
+            if (roundWon) {
+                ticTacToeStatus.textContent = `Player ${ticTacToeCurrentPlayer} Wins!`;
+                ticTacToeScores[ticTacToeCurrentPlayer]++;
+                updateTicTacToeScoreDisplay();
+                ticTacToeGameActive = false;
+                return;
+            }
+
+            let roundDraw = !ticTacToeGameState.includes('');
+            if (roundDraw) {
+                ticTacToeStatus.textContent = `It's a Draw!`;
+                ticTacToeScores.Draw++;
+                updateTicTacToeScoreDisplay();
+                ticTacToeGameActive = false;
+                return;
+            }
+
+            changeTicTacToePlayer();
+        }
+
+        /**
+         * Switches the current player for Tic Tac Toe.
+         */
+        function changeTicTacToePlayer() {
+            ticTacToeCurrentPlayer = ticTacToeCurrentPlayer === 'X' ? 'O' : 'X';
+            ticTacToeStatus.textContent = `Player ${ticTacToeCurrentPlayer}'s Turn`;
+        }
+
+        /**
+         * Starts a new round of Tic Tac Toe.
+         */
+        function startNewTicTacToeGame() {
+            ticTacToeGameActive = true;
+            ticTacToeCurrentPlayer = 'X';
+            ticTacToeGameState = ['', '', '', '', '', '', '', '', ''];
+            ticTacToeStatus.textContent = `Player ${ticTacToeCurrentPlayer}'s Turn`;
+            ticTacToeCells.forEach(cell => {
+                cell.textContent = '';
+                cell.classList.remove('x', 'o');
+            });
+        }
+
+        /**
+         * Resets the Tic Tac Toe scores to zero.
+         */
+        function resetTicTacToeScores() {
+            ticTacToeScores.X = 0;
+            ticTacToeScores.O = 0;
+            ticTacToeScores.Draw = 0;
+            updateTicTacToeScoreDisplay();
+            startNewTicTacToeGame(); // Start a new game after resetting scores
+        }
+
+        /**
+         * Resets the current Tic Tac Toe game round (called when switching tabs).
+         */
+        function resetTicTacToe() {
+            ticTacToeGameActive = false;
+            ticTacToeCurrentPlayer = 'X';
+            ticTacToeGameState = ['', '', '', '', '', '', '', '', ''];
+            ticTacToeStatus.textContent = `Click "Start New Game"`;
+            ticTacToeCells.forEach(cell => {
+                cell.textContent = '';
+                cell.classList.remove('x', 'o');
+            });
+        }
+
+
+        ticTacToeCells.forEach(cell => cell.addEventListener('click', handleTicTacToeCellClick));
+        ticTacToeStartNewBtn.addEventListener('click', startNewTicTacToeGame);
+        ticTacToeResetScoreBtn.addEventListener('click', resetTicTacToeScores);
+        updateTicTacToeScoreDisplay(); // Initial display of scores
+
+
+        // --- Bubble Popping Logic ---
+        const bubbleGameArea = document.getElementById('bubble-game-area');
+        const bubbleScoreSpan = document.getElementById('bubble-score');
+        const bubbleTimerSpan = document.getElementById('bubble-timer');
+        const bubbleStartBtn = document.getElementById('bubble-start-btn');
+        const bubbleResetBtn = document.getElementById('bubble-reset-btn');
+        const bubbleMessageDiv = document.getElementById('bubble-message');
+
+        let bubbleScore = 0;
+        let bubbleTimer = 60; // seconds
+        let bubbleGameInterval;
+        let bubbleTimerInterval;
+        let bubbleGameRunning = false;
+
+        /**
+         * Creates a new bubble element and adds it to the game area.
+         */
+        function createBubble() {
+            if (!bubbleGameRunning) return;
+
+            const bubble = document.createElement('div');
+            bubble.classList.add('bubble');
+
+            const size = Math.floor(Math.random() * 40) + 30; // Bubble size between 30px and 70px
+            bubble.style.width = `${size}px`;
+            bubble.style.height = `${size}px`;
+
+            const maxLeft = bubbleGameArea.clientWidth - size;
+            const left = Math.random() * maxLeft;
+            bubble.style.left = `${left}px`;
+
+            bubble.style.animationDuration = `${Math.random() * 3 + 4}s`; // 4-7 seconds float time
+
+            bubble.addEventListener('click', () => {
+                if (bubbleGameRunning) {
+                    bubble.classList.add('popped');
+                    bubbleScore++;
+                    bubbleScoreSpan.textContent = bubbleScore;
+                    // Remove bubble after animation
+                    setTimeout(() => bubble.remove(), 300);
+                }
+            });
+
+            // Remove bubble if it reaches the top without being popped
+            bubble.addEventListener('animationend', () => {
+                if (!bubble.classList.contains('popped')) {
+                    bubble.remove();
+                }
+            });
+
+            bubbleGameArea.appendChild(bubble);
+        }
+
+        /**
+         * Starts the bubble popping game.
+         */
+        function startBubbleGame() {
+            if (bubbleGameRunning) return;
+
+            bubbleGameRunning = true;
+            bubbleScore = 0;
+            bubbleTimer = 60;
+            bubbleScoreSpan.textContent = bubbleScore;
+            bubbleTimerSpan.textContent = bubbleTimer;
+            bubbleMessageDiv.textContent = '';
+            bubbleGameArea.innerHTML = ''; // Clear existing bubbles
+
+            bubbleStartBtn.classList.add('hidden');
+            bubbleResetBtn.classList.remove('hidden');
+
+            bubbleGameInterval = setInterval(createBubble, 500); // Create a bubble every 0.5 seconds
+            bubbleTimerInterval = setInterval(() => {
+                bubbleTimer--;
+                bubbleTimerSpan.textContent = bubbleTimer;
+                if (bubbleTimer <= 0) {
+                    endBubbleGame();
+                }
+            }, 1000);
+        }
+
+        /**
+         * Ends the bubble popping game.
+         */
+        function endBubbleGame() {
+            bubbleGameRunning = false;
+            clearInterval(bubbleGameInterval);
+            clearInterval(bubbleTimerInterval);
+            bubbleMessageDiv.textContent = `Game Over! Your final score is ${bubbleScore}.`;
+            // Remove all bubbles
+            setTimeout(() => {
+                bubbleGameArea.innerHTML = '';
+            }, 1000); // Give a moment for last bubbles to fade
+            bubbleStartBtn.classList.remove('hidden');
+            bubbleResetBtn.classList.add('hidden');
+        }
+
+        /**
+         * Resets the bubble popping game state.
+         */
+        function resetBubbleGame() {
+            endBubbleGame();
+            bubbleScore = 0;
+            bubbleTimer = 60;
+            bubbleScoreSpan.textContent = bubbleScore;
+            bubbleTimerSpan.textContent = bubbleTimer;
+            bubbleMessageDiv.textContent = '';
+            bubbleGameArea.innerHTML = '';
+            bubbleStartBtn.classList.remove('hidden');
+            bubbleResetBtn.classList.add('hidden');
+        }
+
+        bubbleStartBtn.addEventListener('click', startBubbleGame);
+        bubbleResetBtn.addEventListener('click', resetBubbleGame);
+
+        // --- Flash Cards Logic ---
+        const flashcard = document.getElementById('flashcard');
+        const flashcardFront = document.getElementById('flashcard-front');
+        const flashcardBack = document.getElementById('flashcard-back');
+        const flashcardPrevBtn = document.getElementById('flashcard-prev');
+        const flashcardFlipBtn = document.getElementById('flashcard-flip');
+        const flashcardNextBtn = document.getElementById('flashcard-next');
+        const flashcardCurrentIndexSpan = document.getElementById('flashcard-current-index');
+        const flashcardTotalCardsSpan = document.getElementById('flashcard-total-cards');
+
+        let flashCards = [
+            { question: "What is the capital of France?", answer: "Paris" },
+            { question: "What is the largest planet in our solar system?", answer: "Jupiter" },
+            { question: "Who painted the Mona Lisa?", answer: "Leonardo da Vinci" },
+            { question: "What is the chemical symbol for water?", answer: "H2O" },
+            { question: "Which country is known as the Land of the Rising Sun?", answer: "Japan" },
+            { question: "What is the square root of 144?", answer: "12" },
+            { question: "What is the longest river in the world?", answer: "Nile River" },
+            { question: "What is the highest mountain in Africa?", answer: "Mount Kilimanjaro" },
+            { question: "What is the chemical symbol for gold?", answer: "Au" },
+            { question: "Who wrote 'Romeo and Juliet'?", answer: "William Shakespeare" }
+        ];
+        let currentFlashCardIndex = 0;
+        let isFlashCardFlipped = false;
+
+        /**
+         * Displays the current flashcard.
+         */
+        function displayFlashCard() {
+            if (flashCards.length === 0) {
+                flashcardFront.textContent = "No flashcards available. Add some!";
+                flashcardBack.textContent = "";
+                flashcardCurrentIndexSpan.textContent = 0;
+                flashcardTotalCardsSpan.textContent = 0;
+                flashcardFlipBtn.disabled = true;
+                flashcardPrevBtn.disabled = true;
+                flashcardNextBtn.disabled = true;
+                return;
+            }
+
+            flashcardFlipBtn.disabled = false;
+            flashcardPrevBtn.disabled = false;
+            flashcardNextBtn.disabled = false;
+
+            const card = flashCards[currentFlashCardIndex];
+            flashcardFront.textContent = card.question;
+            flashcardBack.textContent = card.answer;
+            flashcardCurrentIndexSpan.textContent = currentFlashCardIndex + 1;
+            flashcardTotalCardsSpan.textContent = flashCards.length;
+
+            // Ensure card is unflipped when navigating
+            if (isFlashCardFlipped) {
+                flashcard.classList.remove('flipped');
+                isFlashCardFlipped = false;
+            }
+        }
+
+        /**
+         * Flips the current flashcard to show its answer.
+         */
+        function flipFlashCard() {
+            flashcard.classList.toggle('flipped');
+            isFlashCardFlipped = !isFlashCardFlipped;
+        }
+
+        /**
+         * Navigates to the next flashcard.
+         */
+        function nextFlashCard() {
+            currentFlashCardIndex = (currentFlashCardIndex + 1) % flashCards.length;
+            displayFlashCard();
+        }
+
+        /**
+         * Navigates to the previous flashcard.
+         */
+        function prevFlashCard() {
+            currentFlashCardIndex = (currentFlashCardIndex - 1 + flashCards.length) % flashCards.length;
+            displayFlashCard();
+        }
+
+        /**
+         * Resets the flashcard game state.
+         */
+        function resetFlashCards() {
+            currentFlashCardIndex = 0;
+            isFlashCardFlipped = false;
+            displayFlashCard();
+        }
+
+        flashcardFlipBtn.addEventListener('click', flipFlashCard);
+        flashcardNextBtn.addEventListener('click', nextFlashCard);
+        flashcardPrevBtn.addEventListener('click', prevFlashCard);
+
+        // --- Memory Match Logic ---
+        const memoryGameBoard = document.getElementById('memory-game-board');
+        const memoryMovesSpan = document.getElementById('memory-moves');
+        const memoryMatchesSpan = document.getElementById('memory-matches');
+        const memoryTotalPairsSpan = document.getElementById('memory-total-pairs');
+        const memoryStatusDiv = document.getElementById('memory-status');
+        const memoryStartBtn = document.getElementById('memory-start-btn');
+        const memoryResetBtn = document.getElementById('memory-reset-btn');
+        const memoryDifficultySelect = document.getElementById('memoryDifficulty');
+        const memoryGameTimerSpan = document.getElementById('memory-game-timer');
+
+        const allMemoryIcons = ['🍎', '🍌', '🍒', '🍇', '🍋', '🍊', '🍓', '🍉', '🍍', '🥝', '🥑', '🌶️', '🥕', '🥦', '🍄', '🌰']; // More icons for higher difficulties
+        let memoryCards = [];
+        let flippedCards = [];
+        let matchedPairs = 0;
+        let totalMoves = 0;
+        let lockBoard = false; // To prevent flipping more than two cards
+        let memoryGameActive = false;
+        let memoryGameTime = 0;
+        let memoryGameTimerInterval;
+
+        const difficultySettings = {
+            easy: { pairs: 8, cols: 4, rows: 4 }, // 16 cards
+            medium: { pairs: 10, cols: 5, rows: 4 }, // 20 cards
+            hard: { pairs: 12, cols: 6, rows: 4 } // 24 cards
+        };
+        let currentDifficulty = 'easy';
+
+        /**
+         * Shuffles an array using the Fisher-Yates algorithm.
+         * @param {Array} array - The array to shuffle.
+         * @returns {Array} The shuffled array.
+         */
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        /**
+         * Initializes the Memory Match game board based on difficulty.
+         */
+        function initializeMemoryMatchBoard() {
+            memoryGameBoard.innerHTML = ''; // Clear existing board
+            memoryCards = [];
+            flippedCards = [];
+            matchedPairs = 0;
+            totalMoves = 0;
+            lockBoard = false;
+            memoryGameTime = 0;
+            memoryGameTimerSpan.textContent = `Time: 0s`;
+
+            const settings = difficultySettings[currentDifficulty];
+            const numPairs = settings.pairs;
+            const numCols = settings.cols;
+            const numRows = settings.rows;
+
+            memoryGameBoard.style.gridTemplateColumns = `repeat(${numCols}, 1fr)`;
+            memoryGameBoard.style.maxWidth = `${numCols * 100 + (numCols - 1) * 16}px`; // Approx width based on 100px cell + 16px gap
+
+            memoryMovesSpan.textContent = totalMoves;
+            memoryMatchesSpan.textContent = matchedPairs;
+            memoryTotalPairsSpan.textContent = numPairs;
+            memoryStatusDiv.textContent = 'Click "Start Game"';
+
+            // Select icons based on difficulty
+            const selectedIcons = allMemoryIcons.slice(0, numPairs);
+            const gameIcons = [...selectedIcons, ...selectedIcons];
+            const shuffledIcons = shuffleArray(gameIcons);
+
+            shuffledIcons.forEach((icon, index) => {
+                const card = document.createElement('div');
+                card.classList.add('memory-card');
+                card.dataset.icon = icon;
+                card.dataset.index = index;
+
+                card.innerHTML = `
+                    <div class="memory-card-face memory-card-front-face">?</div>
+                    <div class="memory-card-face memory-card-back-face">${icon}</div>
+                `;
+                // Add event listener only when game is active
+                // card.addEventListener('click', handleMemoryCardClick);
+                memoryGameBoard.appendChild(card);
+                memoryCards.push(card);
+            });
+
+            memoryStartBtn.classList.remove('hidden');
+            memoryResetBtn.classList.add('hidden');
+        }
+
+        /**
+         * Starts the Memory Match game.
+         */
+        function startMemoryMatchGame() {
+            if (memoryGameActive) return;
+
+            memoryGameActive = true;
+            memoryStatusDiv.textContent = '';
+            totalMoves = 0;
+            matchedPairs = 0;
+            memoryMovesSpan.textContent = totalMoves;
+            memoryMatchesSpan.textContent = matchedPairs;
+            memoryGameTime = 0;
+            memoryGameTimerSpan.textContent = `Time: 0s`;
+
+            // Re-shuffle and re-render board for a fresh start
+            initializeMemoryMatchBoard(); // This will reset all visual states
+
+            // Add click listeners to cards only when game starts
+            memoryCards.forEach(card => {
+                card.addEventListener('click', handleMemoryCardClick);
+            });
+
+            memoryStartBtn.classList.add('hidden');
+            memoryResetBtn.classList.remove('hidden');
+
+            // Start timer
+            memoryGameTimerInterval = setInterval(() => {
+                memoryGameTime++;
+                memoryGameTimerSpan.textContent = `Time: ${memoryGameTime}s`;
+            }, 1000);
+        }
+
+        /**
+         * Handles a click on a memory card.
+         * @param {Event} event - The click event object.
+         */
+        function handleMemoryCardClick(event) {
+            if (lockBoard || !memoryGameActive) return;
+            const clickedCard = event.currentTarget;
+
+            if (clickedCard.classList.contains('flipped') || clickedCard.classList.contains('matched')) {
+                return; // Do not flip already flipped or matched cards
+            }
+
+            clickedCard.classList.add('flipped');
+            flippedCards.push(clickedCard);
+
+            if (flippedCards.length === 2) {
+                totalMoves++;
+                memoryMovesSpan.textContent = totalMoves;
+                lockBoard = true; // Lock board while checking for match
+                checkForMatch();
+            }
+        }
+
+        /**
+         * Checks if the two flipped cards are a match.
+         */
+        function checkForMatch() {
+            const [card1, card2] = flippedCards;
+            const isMatch = card1.dataset.icon === card2.dataset.icon;
+
+            if (isMatch) {
+                disableCards();
+            } else {
+                unflipCards();
+            }
+        }
+
+        /**
+         * Disables matched cards and updates score.
+         */
+        function disableCards() {
+            flippedCards[0].classList.add('matched');
+            flippedCards[1].classList.add('matched');
+            matchedPairs++;
+            memoryMatchesSpan.textContent = matchedPairs;
+
+            resetFlippedCards();
+
+            if (matchedPairs === difficultySettings[currentDifficulty].pairs) {
+                memoryStatusDiv.textContent = `Congratulations! You matched all pairs in ${totalMoves} moves and ${memoryGameTime} seconds!`;
+                memoryGameActive = false;
+                clearInterval(memoryGameTimerInterval);
+                memoryStartBtn.classList.remove('hidden');
+                memoryResetBtn.classList.add('hidden');
+            }
+        }
+
+        /**
+         * Unflips non-matching cards after a short delay.
+         */
+        function unflipCards() {
+            setTimeout(() => {
+                flippedCards[0].classList.remove('flipped');
+                flippedCards[1].classList.remove('flipped');
+                resetFlippedCards();
+            }, 1000); // Keep cards flipped for 1 second
+        }
+
+        /**
+         * Resets the flippedCards array and unlocks the board.
+         */
+        function resetFlippedCards() {
+            flippedCards = [];
+            lockBoard = false;
+        }
+
+        /**
+         * Resets the Memory Match game state completely (for tab switching or full reset).
+         */
+        function resetMemoryMatch() {
+            memoryGameActive = false;
+            clearInterval(memoryGameTimerInterval);
+            initializeMemoryMatchBoard(); // Re-initialize board based on current difficulty
+        }
+
+        // Event listeners for Memory Match
+        memoryStartBtn.addEventListener('click', startMemoryMatchGame);
+        memoryResetBtn.addEventListener('click', resetMemoryMatch);
+        memoryDifficultySelect.addEventListener('change', (event) => {
+            currentDifficulty = event.target.value;
+            resetMemoryMatch(); // Reset game with new difficulty
+        });
+
+
+        // Initial setup for games
+        window.onload = () => {
+            loadTheme(); // Load saved theme first
+            showGameSection('tic-tac-toe'); // Show Tic Tac Toe by default
+            displayFlashCard(); // Initialize flashcards
+            initializeMemoryMatchBoard(); // Initialize Memory Match board (but not start game)
+        };
+
+    </script>
+</body>
+</html>
