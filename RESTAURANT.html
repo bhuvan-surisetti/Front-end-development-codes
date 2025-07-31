@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Culinary Haven - Fine Dining</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #333;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+        .hero-section {
+            background-image: url('https://placehold.co/1920x1080/000000/FFFFFF?text=Restaurant+Ambiance'); /* Placeholder image */
+            background-size: cover;
+            background-position: center;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        .section-heading {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: #333;
+        }
+        @media (min-width: 768px) {
+            .section-heading {
+                font-size: 3.5rem;
+            }
+        }
+        .menu-category-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #555;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 0.5rem;
+        }
+        .menu-item-name {
+            font-weight: 600;
+            color: #333;
+        }
+        .menu-item-description {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        .gallery-img {
+            width: 100%;
+            height: 250px; /* Fixed height for gallery images */
+            object-fit: cover;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Hero Section -->
+    <header class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="z-10 p-6">
+            <h1 class="text-5xl md:text-7xl font-bold mb-4 animate-fade-in-down">The Culinary Haven</h1>
+            <p class="text-xl md:text-2xl font-light tracking-wide animate-fade-in-up">Experience Exquisite Flavors in a Serene Ambiance</p>
+            <button class="mt-8 px-8 py-3 bg-indigo-600 text-white text-lg font-semibold rounded-full shadow-lg hover:bg-indigo-700 transition duration-300 ease-in-out transform hover:scale-105">
+                View Our Menu
+            </button>
+        </div>
+    </header>
+
+    <!-- About Us Section -->
+    <section id="about" class="py-16 px-4 md:px-8 lg:px-16 bg-white">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="section-heading">Our Story</h2>
+            <p class="text-lg text-gray-700 text-center leading-relaxed">
+                Welcome to The Culinary Haven, where passion for food meets artistic presentation.
+                Nestled in the heart of the city, our restaurant offers a unique dining experience
+                that tantalizes your taste buds and soothes your soul. We pride ourselves on
+                sourcing the freshest local ingredients and crafting dishes that are both
+                innovative and comforting. Join us for an unforgettable culinary journey.
+            </p>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="py-16 px-4 md:px-8 lg:px-16 bg-gray-50">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="section-heading">Our Exquisite Menu</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Appetizers -->
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <h3 class="menu-category-title">Appetizers</h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-baseline">
+                            <span class="menu-item-name">Crispy Calamari</span>
+                            <span class="text-lg font-semibold text-indigo-600">$12.50</span>
+                        </div>
+                        <p class="menu-item-description">Lightly fried calamari served with spicy marinara.</p>
+
+                        <div class="flex justify-between items-baseline">
+                            <span class="menu-item-name">Caprese Skewers</span>
+                            <span class="text-lg font-semibold text-indigo-600">$9.00</span>
+                        </div>
+                        <p class="menu-item-description">Fresh mozzarella, cherry tomatoes, and basil with balsamic glaze.</p>
+
+                        <div class="flex justify-between items-baseline">
+                            <span class="menu-item-name">Truffle Fries</span>
+                            <span class="text-lg font-semibold text-indigo-600">$8.50</span>
+                        </div>
+                        <p class="menu-item-description">Golden fries tossed with truffle oil and parmesan cheese.</p>
+                    </div>
+                </div>
+
+                <!-- Main Courses -->
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <h3 class="menu-category-title">Main Courses</h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-baseline">
+                            <span class="menu-item-name">Pan-Seared Salmon</span>
+                            <span class="text-lg font-semibold text-indigo-600">$24.00</span>
+                        </div>
+                        <p class="menu-item-description">Served with roasted asparagus and lemon-dill sauce.</p>
+
+                        <div class="flex justify-between items-baseline">
+                            <span class="menu-item-name">Ribeye Steak</span>
+                            <span class="text-lg font-semibold text-indigo-600">$32.00</span>
+                        </div>
+                        <p class="menu-item-description">12oz prime ribeye with garlic mashed potatoes and seasonal vegetables.</p>
+
+                        <div class="flex justify-between items-baseline">
+                            <span class="menu-item-name">Vegetable Risotto</span>
+                            <span class="text-lg font-semibold text-indigo-600">$19.50</span>
+                        </div>
+                        <p class="menu-item-description">Creamy arborio rice with seasonal garden vegetables and parmesan.</p>
+                    </div>
+                </div>
+
+                <!-- Desserts -->
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <h3 class="menu-category-title">Desserts</h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-baseline">
+                            <span class="menu-item-name">Chocolate Lava Cake</span>
+                            <span class="text-lg font-semibold text-indigo-600">$9.00</span>
+                        </div>
+                        <p class="menu-item-description">Warm chocolate cake with a molten center, served with vanilla bean ice cream.</p>
+
+                        <div class="flex justify-between items-baseline">
+                            <span class="menu-item-name">New York Cheesecake</span>
+                            <span class="text-lg font-semibold text-indigo-600">$8.50</span>
+                        </div>
+                        <p class="menu-item-description">Classic creamy cheesecake with a berry compote.</p>
+                    </div>
+                </div>
+
+                <!-- Drinks -->
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <h3 class="menu-category-title">Drinks</h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-baseline">
+                            <span class="menu-item-name">House Wine (Glass)</span>
+                            <span class="text-lg font-semibold text-indigo-600">$10.00</span>
+                        </div>
+                        <p class="menu-item-description">Red or White.</p>
+
+                        <div class="flex justify-between items-baseline">
+                            <span class="menu-item-name">Craft Beer Selection</span>
+                            <span class="text-lg font-semibold text-indigo-600">$7.00</span>
+                        </div>
+                        <p class="menu-item-description">Ask your server for today's specials.</p>
+
+                        <div class="flex justify-between items-baseline">
+                            <span class="menu-item-name">Fresh Juices</span>
+                            <span class="text-lg font-semibold text-indigo-600">$6.00</span>
+                        </div>
+                        <p class="menu-item-description">Orange, Apple, Cranberry.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-16 px-4 md:px-8 lg:px-16 bg-white">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="section-heading">Our Culinary Creations & Ambiance</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <img src="https://placehold.co/600x400/FF5733/FFFFFF?text=Dish+1" alt="Dish 1" class="gallery-img">
+                <img src="https://placehold.co/600x400/33FF57/FFFFFF?text=Ambiance+1" alt="Ambiance 1" class="gallery-img">
+                <img src="https://placehold.co/600x400/3357FF/FFFFFF?text=Dish+2" alt="Dish 2" class="gallery-img">
+                <img src="https://placehold.co/600x400/FFFF33/000000?text=Ambiance+2" alt="Ambiance 2" class="gallery-img">
+                <img src="https://placehold.co/600x400/FF33FF/FFFFFF?text=Dish+3" alt="Dish 3" class="gallery-img">
+                <img src="https://placehold.co/600x400/33FFFF/000000?text=Ambiance+3" alt="Ambiance 3" class="gallery-img">
+            </div>
+        </div>
+    </section>
+
+    <!-- Reservation/Feedback Form Section -->
+    <section id="contact" class="py-16 px-4 md:px-8 lg:px-16 bg-gray-50">
+        <div class="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-md">
+            <h2 class="section-heading">Reservations & Feedback</h2>
+            <form id="reservationForm" class="space-y-6">
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                    <input type="text" id="name" name="name" required
+                           class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                </div>
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <input type="email" id="email" name="email" required
+                           class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                </div>
+                <div>
+                    <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                    <input type="tel" id="phone" name="phone"
+                           class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                </div>
+                <div>
+                    <label for="type" class="block text-sm font-medium text-gray-700 mb-1">Type</label>
+                    <select id="type" name="type"
+                            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        <option value="reservation">Table Reservation</option>
+                        <option value="feedback">Feedback</option>
+                    </select>
+                </div>
+
+                <div id="reservationFields" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Date</label>
+                        <input type="date" id="date" name="date"
+                               class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
+                    <div>
+                        <label for="time" class="block text-sm font-medium text-gray-700 mb-1">Time</label>
+                        <input type="time" id="time" name="time"
+                               class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
+                    <div>
+                        <label for="guests" class="block text-sm font-medium text-gray-700 mb-1">Number of Guests</label>
+                        <input type="number" id="guests" name="guests" min="1" value="1"
+                               class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Message / Feedback</label>
+                    <textarea id="message" name="message" rows="4"
+                              class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
+                </div>
+
+                <button type="submit" class="w-full py-3 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-300 ease-in-out">
+                    Submit
+                </button>
+                <div id="formMessage" class="mt-4 text-center text-sm font-medium"></div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 px-4 md:px-8 lg:px-16">
+        <div class="max-w-6xl mx-auto text-center md:flex md:justify-between md:items-center">
+            <div class="mb-4 md:mb-0">
+                <h3 class="text-2xl font-bold mb-2">The Culinary Haven</h3>
+                <p class="text-gray-400">123 Foodie Lane, Gastronomy City</p>
+                <p class="text-gray-400">Phone: (123) 456-7890 | Email: info@culinaryhaven.com</p>
+            </div>
+            <div class="flex justify-center space-x-6">
+                <a href="#" class="text-gray-400 hover:text-white transition duration-300">Facebook</a>
+                <a href="#" class="text-gray-400 hover:text-white transition duration-300">Instagram</a>
+                <a href="#" class="text-gray-400 hover:text-white transition duration-300">Twitter</a>
+            </div>
+        </div>
+        <div class="mt-8 text-center text-gray-500 text-sm">
+            &copy; 2023 The Culinary Haven. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        // Get form elements
+        const reservationForm = document.getElementById('reservationForm');
+        const typeSelect = document.getElementById('type');
+        const reservationFields = document.getElementById('reservationFields');
+        const formMessage = document.getElementById('formMessage');
+
+        // Function to toggle reservation fields visibility
+        function toggleReservationFields() {
+            if (typeSelect.value === 'reservation') {
+                reservationFields.classList.remove('hidden');
+                // Make reservation fields required when type is reservation
+                document.getElementById('date').setAttribute('required', 'required');
+                document.getElementById('time').setAttribute('required', 'required');
+                document.getElementById('guests').setAttribute('required', 'required');
+            } else {
+                reservationFields.classList.add('hidden');
+                // Remove required attribute when not reservation
+                document.getElementById('date').removeAttribute('required');
+                document.getElementById('time').removeAttribute('required');
+                document.getElementById('guests').removeAttribute('required');
+            }
+        }
+
+        // Event listener for type select change
+        typeSelect.addEventListener('change', toggleReservationFields);
+
+        // Handle form submission
+        reservationForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Simple validation
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+            const formType = typeSelect.value;
+
+            if (name === '' || email === '' || message === '') {
+                formMessage.textContent = 'Please fill in all required fields.';
+                formMessage.className = 'mt-4 text-center text-sm font-medium text-red-600';
+                return;
+            }
+
+            if (formType === 'reservation') {
+                const date = document.getElementById('date').value;
+                const time = document.getElementById('time').value;
+                const guests = document.getElementById('guests').value;
+
+                if (date === '' || time === '' || guests === '' || parseInt(guests) <= 0) {
+                    formMessage.textContent = 'Please fill in all reservation details correctly.';
+                    formMessage.className = 'mt-4 text-center text-sm font-medium text-red-600';
+                    return;
+                }
+                // In a real application, you would send this data to a server
+                console.log('Reservation Details:', { name, email, date, time, guests, message });
+                formMessage.textContent = 'Reservation request submitted successfully! We will contact you shortly.';
+            } else {
+                // In a real application, you would send this feedback to a server
+                console.log('Feedback Details:', { name, email, message });
+                formMessage.textContent = 'Thank you for your feedback!';
+            }
+
+            formMessage.className = 'mt-4 text-center text-sm font-medium text-green-600';
+            reservationForm.reset(); // Clear the form
+            toggleReservationFields(); // Reset visibility after clearing
+        });
+
+        // Initial call to set correct visibility on page load
+        document.addEventListener('DOMContentLoaded', toggleReservationFields);
+    </script>
+</body>
+</html>
